@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Section } from "@/components/layout/section";
 import { PageHeader } from "@/components/layout/page-header";
+import { MetaStats } from "@/components/shared/meta-stats";
 import { ProjectsIndex } from "@/features/projects/components/projects-index";
 import { parseView } from "@/features/projects/lib/views";
 import { SECTORS, type SectorSlug } from "@/lib/config/sectors";
@@ -25,12 +26,25 @@ export default async function ProjectsPage({
   const params = await searchParams;
   const [projects, available] = await Promise.all([getProjects(), getUsedSectors()]);
 
+  // Counted from the data rather than written down, so the figures cannot drift
+  // out of step with the fixtures.
+  const models = new Set(projects.flatMap((project) => project.models));
+
   return (
     <>
       <PageHeader
         eyebrow="Selected work"
         title="Projects"
         lede="Residential, hospitality, mixed-use and institutional work across Abuja, Kano and beyond — each one carrying the development model it was built under."
+        aside={
+          <MetaStats
+            stats={[
+              { value: String(projects.length), label: "Projects" },
+              { value: String(available.length), label: "Sectors" },
+              { value: String(models.size), label: "Development models" },
+            ]}
+          />
+        }
       />
       <Section className="pt-0">
         <ProjectsIndex

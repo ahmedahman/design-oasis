@@ -36,6 +36,7 @@ export function Hero({ panorama, poster, posterAlt }: HeroProps) {
   const support = useWebGLSupport();
   const reduced = useReducedMotion();
   const [sceneReady, setSceneReady] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false);
 
   // Give the poster a frame to paint before we start fetching three.js.
   const [mountScene, setMountScene] = useState(false);
@@ -73,7 +74,7 @@ export function Hero({ panorama, poster, posterAlt }: HeroProps) {
             animate={{ opacity: sceneReady ? 1 : 0 }}
             transition={TRANSITION.reveal}
           >
-            <HeroScene src={panorama} drift={!reduced} />
+            <HeroScene src={panorama} drift={!reduced} onFirstDrag={() => setHasDragged(true)} />
           </motion.div>
         </AnimatePresence>
       )}
@@ -81,6 +82,26 @@ export function Hero({ panorama, poster, posterAlt }: HeroProps) {
       {/* Seats the scene so its edges do not read as a pasted rectangle. */}
       <div className="shadow-scene-vignette pointer-events-none absolute inset-0 z-5" aria-hidden />
       <div className="bg-hero-scrim pointer-events-none absolute inset-0 z-6" aria-hidden />
+
+      {/* The cursor announces the drag, but only where there is a cursor. Without
+          this most phone visitors never discover the site's one real
+          interaction. It appears only once the scene is actually live — there is
+          nothing to drag while the poster is standing in for it — and retires
+          for good after the first drag. */}
+      <AnimatePresence>
+        {interactive && !hasDragged && (
+          <motion.p
+            className="text-light/85 right-gutter pointer-events-none absolute bottom-8 z-7 flex items-center gap-2.5 text-[10px] tracking-[0.2em] uppercase"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={TRANSITION.standard}
+          >
+            <span aria-hidden>&#8596;</span>
+            Drag to look around
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

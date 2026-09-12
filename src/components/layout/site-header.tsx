@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Magnetic } from "@/components/motion";
 import { BrandLogo } from "@/components/shared/brand-logo";
 import { Button } from "@/components/ui/button";
-import { DARK_HERO_ROUTES, MAIN_NAV } from "@/lib/config/navigation";
+import { hasDarkHero, MAIN_NAV } from "@/lib/config/navigation";
 import { ROUTES } from "@/lib/constants/routes";
 import { cn } from "@/lib/utils/cn";
 
@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils/cn";
  */
 export function SiteHeader() {
   const pathname = usePathname();
-  const overDark = DARK_HERO_ROUTES.includes(pathname);
+  const overDark = hasDarkHero(pathname);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 

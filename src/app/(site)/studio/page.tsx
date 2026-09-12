@@ -5,7 +5,6 @@ import { Section } from "@/components/layout/section";
 import { Reveal, RevealItem } from "@/components/motion";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { StatBand } from "@/components/shared/stat-band";
-import { SITE } from "@/lib/config/site";
 import { CORE_VALUES, CORPORATE, MISSION, TEAM, VISION } from "@/lib/config/studio";
 
 export const metadata: Metadata = {
@@ -17,10 +16,12 @@ export const metadata: Metadata = {
 export default function StudioPage() {
   return (
     <>
+      {/* The lede is written rather than SITE.description: the home page opens
+          with that sentence now, and the two should not echo each other. */}
       <PageHeader
         eyebrow="The studio"
         title="Design excellence, development strategy, investment structuring."
-        lede={SITE.description}
+        lede="Small enough that the people who design a project are the people who deliver it, and structured so the design decisions and the financial ones are made by the same team."
       />
 
       <Section className="pt-0">
@@ -49,7 +50,12 @@ export default function StudioPage() {
       </Section>
 
       <Section tone="surface">
-        <SectionHeading eyebrow="Core values" title="What we hold to." />
+        <SectionHeading
+          layout="split"
+          eyebrow="Core values"
+          title="What we hold to."
+          lede="Five commitments that decide how we price, who we partner with, and what we will not put our name to."
+        />
         <Reveal stagger className="mt-14 grid gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {CORE_VALUES.map((value) => (
             <RevealItem key={value.title} className="border-border border-t pt-6">
@@ -61,7 +67,12 @@ export default function StudioPage() {
       </Section>
 
       <Section rules>
-        <SectionHeading eyebrow="The team" title="Who does the work." />
+        <SectionHeading
+          layout="split"
+          eyebrow="The team"
+          title="Who does the work."
+          lede="A small studio by design — architects and engineers who stay with a project from the first sketch to the last inspection rather than handing it down a chain."
+        />
         <Reveal stagger className="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
           {TEAM.map((member) => (
             <RevealItem key={member.name} className="border-border border-t pt-6">
@@ -78,7 +89,12 @@ export default function StudioPage() {
       </Section>
 
       <Section tone="muted">
-        <SectionHeading eyebrow="Corporate" title="The details." />
+        <SectionHeading
+          layout="split"
+          eyebrow="Corporate"
+          title="The details."
+          lede="The registered particulars, for anyone running checks before a conversation."
+        />
         <Reveal className="mt-12">
           <dl className="grid gap-x-12 sm:grid-cols-2">
             {CORPORATE.map((row) => (

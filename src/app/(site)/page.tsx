@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/features/hero/hero-section";
 import { ProjectCard } from "@/features/projects/components/project-card";
 import { SERVICES } from "@/lib/config/services";
+import { SITE } from "@/lib/config/site";
 import { getFeaturedProjects } from "@/lib/data/projects";
 import { ROUTES } from "@/lib/constants/routes";
 
@@ -22,9 +23,13 @@ export default async function HomePage() {
       <div className="bg-canvas relative z-10">
         <Section id="approach" rules>
           <SectionHeading
+            layout="split"
             eyebrow="What we are"
             title="A developer that designs, not a consultant that advises."
-            lede="Design Oasis works at the intersection of design excellence, development strategy and investment structuring — so the drawing and the deal are decided together, by the same people."
+            lede={[
+              SITE.description,
+              "Design Oasis works at the intersection of design excellence, development strategy and investment structuring — so the drawing and the deal are decided together, by the same people.",
+            ]}
           />
           <Reveal delay={0.1} className="mt-14">
             <StatBand />
@@ -33,7 +38,7 @@ export default async function HomePage() {
 
         <Section id="work" tone="surface">
           <div className="flex flex-wrap items-end justify-between gap-8">
-            <SectionHeading eyebrow="Selected work" title="Recent projects" />
+            <SectionHeading layout="stacked" eyebrow="Selected work" title="Recent projects" />
             <Reveal delay={0.1}>
               <Button asChild variant="outline">
                 <Link href={ROUTES.projects}>All projects</Link>
@@ -49,7 +54,12 @@ export default async function HomePage() {
         </Section>
 
         <Section id="how" rules>
-          <SectionHeading eyebrow="How we work" title="Three ways in." />
+          <SectionHeading
+            layout="split"
+            eyebrow="How we work"
+            title="Three ways in."
+            lede="Work reaches us three ways: as a site to develop, a brief to design, or a project to deliver end to end. The route in sets the structure, not the standard."
+          />
           <Reveal stagger className="mt-16 grid gap-x-10 gap-y-14 lg:grid-cols-3">
             {SERVICES.map((service, i) => (
               <RevealItem key={service.id} className="border-border border-t pt-7">
@@ -75,6 +85,7 @@ export default async function HomePage() {
         <Section id="landowners" tone="dark" rules>
           <div className="grid items-end gap-12 lg:grid-cols-2">
             <SectionHeading
+              layout="stacked"
               eyebrow="For landowners"
               title="Your land is the equity. We bring everything else."
               lede="Design leadership, development planning, financial modelling, investor coordination and execution — structured so you keep upside instead of selling it."

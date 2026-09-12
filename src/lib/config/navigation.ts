@@ -46,8 +46,20 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
 ];
 
 /**
- * Routes whose first section is a full-bleed dark hero, so the header starts
+ * Routes whose first section is a full-bleed dark image, so the header starts
  * transparent with light type instead of dark-on-canvas. Config rather than a
  * prop threaded through layouts — every page here gets it right by default.
+ *
+ * Prefixes exist because project detail pages are dynamic: `/projects/[slug]`
+ * opens on a cover photograph, while `/projects` itself is an ordinary light
+ * page top and must not match.
  */
-export const DARK_HERO_ROUTES: string[] = [ROUTES.home];
+const DARK_HERO_ROUTES: string[] = [ROUTES.home];
+const DARK_HERO_PREFIXES: string[] = [`${ROUTES.projects}/`];
+
+export function hasDarkHero(pathname: string): boolean {
+  return (
+    DARK_HERO_ROUTES.includes(pathname) ||
+    DARK_HERO_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+  );
+}

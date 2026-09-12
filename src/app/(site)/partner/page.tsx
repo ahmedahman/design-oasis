@@ -23,7 +23,12 @@ export default function PartnerPage() {
       />
 
       <Section id="structure" tone="surface">
-        <SectionHeading eyebrow="The structure" title="How a joint venture works." />
+        <SectionHeading
+          layout="split"
+          eyebrow="The structure"
+          title="How a joint venture works."
+          lede="Two contributions, one project company, and terms agreed before anything is drawn. The land stays yours on paper until the structure you signed says otherwise."
+        />
         <Reveal className="mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
           {JV_CONTRIBUTIONS.map((side) => (
             <div key={side.party} className="border-lime border-t pt-6">
@@ -42,6 +47,7 @@ export default function PartnerPage() {
 
       <Section id="returns" rules>
         <SectionHeading
+          layout="split"
           eyebrow="Your return"
           title="Four ways to take it."
           lede="The right structure depends on whether you want certainty, upside, or income — and we will model all of them before you decide."
@@ -82,6 +88,7 @@ export default function PartnerPage() {
       <Section id="submit" tone="surface">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
           <SectionHeading
+            layout="stacked"
             eyebrow="Start here"
             title="Submit your land."
             lede="Tell us where it is and roughly how large. We will come back with an honest read on what it could carry — and whether a JV is the right route at all."

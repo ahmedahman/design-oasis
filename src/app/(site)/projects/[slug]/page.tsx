@@ -50,7 +50,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       {/* Full-bleed cover. The page title sits over it rather than above it, so
-          the photograph is the first thing on the page. */}
+          the photograph is the first thing on the page. Title left, facts right:
+          a static image has no reason to keep its right side clear, and this
+          surfaces the numbers well before the table further down. */}
       <section className="relative flex h-[72svh] min-h-[30rem] items-end overflow-hidden">
         <Image
           src={project.cover.src}
@@ -60,22 +62,39 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           sizes="100vw"
           className="object-cover"
         />
-        <div className="bg-hero-scrim absolute inset-0" aria-hidden />
-        <Container className="relative pb-14">
-          <div className="flex flex-wrap items-center gap-2.5">
+        <div className="bg-cover-scrim absolute inset-0" aria-hidden />
+        <Container className="relative grid gap-8 pb-14 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
             <Badge variant="onDark">{SECTOR_LABELS[project.sector]}</Badge>
-            {project.models.map((model) => (
-              <Badge key={model} variant="onDark">
-                {DEVELOPMENT_MODELS[model].label}
-              </Badge>
-            ))}
+            <h1 className="font-display mt-6 text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.02] tracking-tight text-white">
+              {project.title}
+            </h1>
           </div>
-          <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.02] tracking-tight text-white">
-            {project.title}
-          </h1>
-          <p className="mt-4 text-white/70">
-            {project.location} · {PROJECT_STATUS_LABELS[project.status]} · {project.year}
-          </p>
+
+          <dl className="text-white/75 lg:col-span-5 lg:col-start-8">
+            <div className="flex items-baseline justify-between gap-6 border-t border-white/20 py-3">
+              <dt className="text-[10px] tracking-[0.16em] text-white/50 uppercase">Location</dt>
+              <dd className="text-right">{project.location}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-6 border-t border-white/20 py-3">
+              <dt className="text-[10px] tracking-[0.16em] text-white/50 uppercase">Status</dt>
+              <dd className="text-right">{PROJECT_STATUS_LABELS[project.status]}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-6 border-t border-white/20 py-3">
+              <dt className="text-[10px] tracking-[0.16em] text-white/50 uppercase">Year</dt>
+              <dd className="text-right tabular-nums">{project.year}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-6 border-y border-white/20 py-3">
+              <dt className="text-[10px] tracking-[0.16em] text-white/50 uppercase">Structure</dt>
+              <dd className="flex flex-wrap justify-end gap-1.5">
+                {project.models.map((model) => (
+                  <Badge key={model} variant="onDark">
+                    {DEVELOPMENT_MODELS[model].label}
+                  </Badge>
+                ))}
+              </dd>
+            </div>
+          </dl>
         </Container>
       </section>
 

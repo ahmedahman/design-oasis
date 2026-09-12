@@ -10,6 +10,11 @@ import { Hero } from "./hero";
  * `clip-path: inset(0)` — which promotes the section to a containing block, so
  * the fixed child stays put while the page scrolls up over it. Cheap, and the
  * single biggest "this feels built" cue on the site.
+ *
+ * Deliberately sparse: an eyebrow and a headline, nothing more. The hero is the
+ * one surface on the site that keeps its empty space, because that space is the
+ * drag surface — prose over the scene both competes with the affordance and eats
+ * the area you would grab. The firm's description lives in `#approach` instead.
  */
 export function HeroSection() {
   return (
@@ -37,7 +42,6 @@ export function HeroSection() {
           lines={["Land becomes", "an asset when", "someone designs it."]}
           className="font-display max-w-5xl text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.95] tracking-tight"
         />
-        <p className="text-light/70 mt-8 max-w-md text-base">{SITE.description}</p>
       </Container>
     </section>
   );

@@ -80,14 +80,45 @@ IntersectionObserver computes its ratio **after** clipping. An element that star
 `viewport.amount` — it hides itself from its own trigger. So the observed element
 carries no clip; the clip sits on a child that inherits the variant state.
 
-## 4. Components
+## 4. Headings
+
+The container is 1600px. A single left column caps the title at 768px and strands
+half the measure, so `SectionHeading` has three shapes:
+
+| `layout`  | Shape                                               | Use for                               |
+| --------- | --------------------------------------------------- | ------------------------------------- |
+| `stacked` | One column. The default.                            | Headings already inside a grid column |
+| `split`   | 12-col — title cols 1–7, lede and `aside` cols 8–12 | Almost everything else                |
+| `wide`    | One column, title to ~1100px at a larger size       | Short titles carrying no lede         |
+
+`stacked` is the default deliberately: this component is sometimes passed _into_ a
+grid column (home `#landowners`, partner `#submit`), and splitting there would nest
+a split inside a split. Sections opt in.
+
+`split` bottom-aligns its two columns when the right side is a lede alone — a single
+sentence top-aligned against a three-line title reads as an accident. With an `aside`
+the right column becomes the taller of the two, so those top-align instead.
+
+`lede` takes a string or an array of strings, which is how the home page carries two
+paragraphs. `aside` is anything else for the right column: `MetaStats` for counts,
+`NumberedIndex` for a list of what follows.
+
+### The hero is exempt
+
+The hero is the one surface that keeps its empty space. It carries an eyebrow and a
+headline and nothing else, because that space is the drag surface — prose over the
+scene competes with the affordance and eats the area you would grab. The firm's
+description lives in the `#approach` section instead.
+
+## 5. Components
 
 - `components/ui/` — `Button`, `Badge`, `Input`, `Textarea`. Squared, not pill.
 - `components/motion/` — every animation in the app goes through these.
 - `components/chrome/` — `ColumnRules`, the editorial hairline overlay.
 - `components/layout/` — `Container`, `Section`, `PageHeader`, `SiteHeader`, `SiteFooter`.
 - `components/forms/` — `FormField` (label + control + error in one).
-- `components/shared/` — `BrandLogo`, `SectionHeading`, `StatBand`.
+- `components/shared/` — `BrandLogo`, `SectionHeading`, `StatBand`, and the two
+  right-column fillers, `MetaStats` and `NumberedIndex`.
 
 `Section` takes `tone` (`canvas` · `surface` · `muted` · `dark`) and `rules`.
 `className` lands on the `<section>`; use `contentClassName` for the inner block.
@@ -95,7 +126,7 @@ carries no clip; the clip sits on a child that inherits the variant state.
 `PageHeader` is the top of every page that does not open on the hero — it clears the
 fixed header once, and renders the page's `h1`. Exactly one `h1` per page.
 
-## 5. The cursor is data attributes
+## 6. The cursor is data attributes
 
 No provider, no client wrapper. Any element — server components included — opts in:
 
@@ -109,7 +140,7 @@ No provider, no client wrapper. Any element — server components included — o
 
 One listener at the root resolves the hovered element with `closest()`.
 
-## 6. The hero
+## 7. The hero
 
 `features/hero/` is the only place `three` may be imported, and the scene always loads
 through `next/dynamic` with `ssr: false` behind a poster. It refuses to load at all on
@@ -118,7 +149,17 @@ no-WebGL, `saveData`, or under 4 GiB device memory — the poster simply stays.
 Swap `public/hero/panorama.png` for a real 2:1 equirectangular interior and delete
 `scripts/generate-hero-placeholder.mjs`.
 
-## 7. Placeholders to replace
+**Scrims are set for a white image, not the placeholder.** `bg-hero-scrim` is shaped
+around where the copy is — a tight band at the top for the header nav, a broad one at
+the bottom for the headline and drag cue, near-nothing through the middle so the
+scene shows. `bg-cover-scrim` is a separate, bottom-weighted utility for the project
+cover, which carries copy along its whole bottom edge. They are kept apart on purpose:
+a left-lit hero and a bottom-lit cover want opposite things.
+
+When you change either, test against a **bright** image. The placeholder panorama is
+uniformly dark and will pass almost any scrim; a real sunlit interior will not.
+
+## 8. Placeholders to replace
 
 | What                   | Where                                         |
 | ---------------------- | --------------------------------------------- |

@@ -13,7 +13,15 @@ import { Panorama } from "./scenes/panorama";
  * it needs a continuous loop. R3F tears the context down on unmount, and the
  * canvas only exists while the hero is mounted.
  */
-export function HeroScene({ src, drift }: { src: string; drift: boolean }) {
+export function HeroScene({
+  src,
+  drift,
+  onFirstDrag,
+}: {
+  src: string;
+  drift: boolean;
+  onFirstDrag?: () => void;
+}) {
   return (
     <Canvas
       camera={{ fov: 74, near: 1, far: 1100, position: [0, 0, 0] }}
@@ -24,7 +32,7 @@ export function HeroScene({ src, drift }: { src: string; drift: boolean }) {
       style={{ position: "absolute", inset: 0 }}
     >
       <Suspense fallback={null}>
-        <Panorama src={src} drift={drift} />
+        <Panorama src={src} drift={drift} onFirstDrag={onFirstDrag} />
       </Suspense>
     </Canvas>
   );

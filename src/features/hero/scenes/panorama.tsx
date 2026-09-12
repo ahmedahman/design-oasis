@@ -8,6 +8,8 @@ type PanoramaProps = {
   src: string;
   /** Idle drift is suppressed under prefers-reduced-motion. */
   drift: boolean;
+  /** Fired once, on the first drag, so the hero can retire its cue. */
+  onFirstDrag?: () => void;
 };
 
 /**
@@ -19,7 +21,7 @@ type PanoramaProps = {
  * can be disposed on unmount. Pointer-down comes from R3F's own event system
  * and move/up from the window, which keeps the renderer untouched.
  */
-export function Panorama({ src, drift }: PanoramaProps) {
+export function Panorama({ src, drift, onFirstDrag }: PanoramaProps) {
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
   const { camera, invalidate } = useThree();
 
@@ -75,6 +77,7 @@ export function Panorama({ src, drift }: PanoramaProps) {
   }, []);
 
   function onPointerDown(event: ThreeEvent<PointerEvent>) {
+    onFirstDrag?.();
     dragging.current = true;
     last.current = { x: event.clientX, y: event.clientY };
     document.body.setAttribute("data-dragging", "");

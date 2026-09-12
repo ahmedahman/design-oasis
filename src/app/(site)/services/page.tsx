@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { NumberedIndex } from "@/components/shared/numbered-index";
 import { Section } from "@/components/layout/section";
 import { Reveal, RevealItem } from "@/components/motion";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,14 @@ export default function ServicesPage() {
         eyebrow="What we do"
         title="Three ways in."
         lede="Most firms sell one of these. Design Oasis runs all three, which is why the drawing and the deal can be decided together."
+        aside={
+          <NumberedIndex
+            entries={SERVICES.map((service) => ({
+              href: `#${service.id}`,
+              label: service.title,
+            }))}
+          />
+        }
       />
 
       {SERVICES.map((service, i) => (

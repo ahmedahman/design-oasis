@@ -153,23 +153,44 @@
   }
 }
 
-/* Seats the headline over photography. Weighted to the left third so copy stays
-   legible over a bright subject without muddying the whole image. */
+/* Seats the hero headline over photography.
+   Shaped around where the copy actually is rather than dimmed uniformly: a tight
+   band at the very top for the header nav, a broad one at the bottom for the
+   headline and the drag cue, and near-nothing through the middle so the scene
+   stays visible — a scene you can see is one worth grabbing.
+   The values are set for a WHITE image, not the dark placeholder panorama: the
+   placeholder would pass almost any scrim, and a real interior will not. */
 @utility bg-hero-scrim {
   background-image:
     linear-gradient(
-      to right,
-      rgb(11 12 46 / 0.72) 0%,
-      rgb(11 12 46 / 0.4) 38%,
-      rgb(11 12 46 / 0.08) 70%,
-      transparent 100%
-    ),
-    linear-gradient(
       to bottom,
-      rgb(11 12 46 / 0.35) 0%,
-      rgb(11 12 46 / 0.1) 45%,
-      rgb(11 12 46 / 0.6) 100%
-    );
+      rgb(11 12 46 / 0.68) 0%,
+      rgb(11 12 46 / 0.3) 9%,
+      rgb(11 12 46 / 0.06) 22%,
+      rgb(11 12 46 / 0.04) 48%,
+      rgb(11 12 46 / 0.4) 76%,
+      rgb(11 12 46 / 0.74) 100%
+    ),
+    linear-gradient(to right, rgb(11 12 46 / 0.34) 0%, rgb(11 12 46 / 0.12) 45%, transparent 74%);
+}
+
+/* The project cover is a different job: a static image carrying copy along its
+   whole bottom edge, title left and meta right. So it is weighted to the bottom
+   rather than the left. Kept separate from bg-hero-scrim deliberately — a
+   left-lit hero and a bottom-lit cover want opposite things, and one shared
+   utility would be a compromise that suits neither. */
+@utility bg-cover-scrim {
+  background-image:
+    linear-gradient(
+      to top,
+      rgb(11 12 46 / 0.9) 0%,
+      rgb(11 12 46 / 0.78) 28%,
+      rgb(11 12 46 / 0.6) 46%,
+      rgb(11 12 46 / 0.3) 66%,
+      rgb(11 12 46 / 0.12) 84%,
+      rgb(11 12 46 / 0.25) 100%
+    ),
+    linear-gradient(to right, rgb(11 12 46 / 0.3) 0%, transparent 45%);
 }
 
 /* Seats a caption over a project image. */
