@@ -1,26 +1,163 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   Design Oasis design tokens.
+
+   "A gallery with a balance sheet behind it." Design Oasis is not a decorator —
+   it is a developer that designs. Warm luxe editorial: a bone canvas doing the
+   luxury work, the logo navy as the dark ground, and the logo lime as the one
+   live accent used sparingly enough that it still reads as an event.
+
+   Navy and lime are sampled from the brand logo. One accent is a rule, not a
+   suggestion: if a third hue seems necessary, the layout is doing too little.
+
+   Never hardcode a hex or px in a component. If a value is not here, add it here.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Surfaces — warm, never clinical white-on-grey */
+  --color-canvas: #faf8f4;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1eee8;
+
+  /* Ground — the logo navy, deepened for scrims, footer and dark bands */
+  --color-navy-950: #0b0c2e;
+  --color-navy-900: #1b1b6e;
+  --color-navy-800: #2a2a82;
+  --color-navy-700: #3d3d9c;
+
+  /* Accent — the logo lime. CTAs, active states, rules, hovers. Used sparingly. */
+  --color-lime: #8dc63f;
+  --color-lime-dark: #74a830;
+  --color-lime-light: #b4dc7c;
+  --color-lime-wash: #f2f8e8;
+
+  /* Lines */
+  --color-border: #e6e1d8;
+  --color-border-strong: #d3ccc0;
+
+  /* Text */
+  --color-foreground: #14152e;
+  --color-muted: #6e6b66;
+  --color-muted-light: #a29e97;
+
+  /* Feedback */
+  --color-success: #15803d;
+  --color-success-bg: #dcfce7;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fee2e2;
+
+  /* Type */
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii — restrained. This is architecture, not a consumer app. */
+  --radius-sm: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-2xl: 0.75rem;
+
+  /* Elevation — never add anything heavier */
+  --shadow-card: 0 1px 2px rgb(11 12 46 / 0.04), 0 4px 16px rgb(11 12 46 / 0.06);
+  --shadow-raised: 0 2px 4px rgb(11 12 46 / 0.06), 0 12px 32px rgb(11 12 46 / 0.1);
+  --shadow-modal: 0 24px 64px rgb(11 12 46 / 0.28);
+
+  /* Site chrome */
+  --spacing-gutter: 1.25rem;
+  --spacing-header: 5rem;
 }
 
+/* Semantic aliases, so components name intent rather than a shade. Changing
+   what "dark" means is then one line here, not a find-and-replace. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-dark: var(--color-navy-950);
+  --color-light: var(--color-canvas);
+  --color-accent: var(--color-lime);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  /* Lenis drives scrolling; native smooth would fight it. */
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* The display face carries its own tighter rhythm wherever it is applied. */
+  .font-display {
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-lime);
+    color: var(--color-navy-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lime);
+    outline-offset: 3px;
+  }
+
+  /* The floor, not the ceiling: primitives also check the media query in JS so
+     they can skip layout animation entirely rather than just run it fast. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Lenis: it sets these itself, but declaring them avoids a first-paint jump. */
+@layer base {
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+/* Seats the headline over photography. Weighted to the left third so copy stays
+   legible over a bright subject without muddying the whole image. */
+@utility bg-hero-scrim {
+  background-image:
+    linear-gradient(
+      to right,
+      rgb(11 12 46 / 0.72) 0%,
+      rgb(11 12 46 / 0.4) 38%,
+      rgb(11 12 46 / 0.08) 70%,
+      transparent 100%
+    ),
+    linear-gradient(to bottom, rgb(11 12 46 / 0.35) 0%, rgb(11 12 46 / 0.1) 45%, rgb(11 12 46 / 0.6) 100%);
+}
+
+/* Seats a caption over a project image. */
+@utility bg-card-scrim {
+  background-image: linear-gradient(
+    to top,
+    rgb(11 12 46 / 0.82) 0%,
+    rgb(11 12 46 / 0.42) 30%,
+    transparent 65%
+  );
+}
+
+/* The vignette that seats the WebGL scene in the hero, lifted from the Pinnacl
+   reference — it stops the canvas edges reading as a pasted rectangle. */
+@utility shadow-scene-vignette {
+  box-shadow: inset 0 0 200px 60px rgb(11 12 46 / 0.55);
 }
