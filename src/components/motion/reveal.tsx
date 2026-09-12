@@ -5,8 +5,6 @@ import { motion } from "motion/react";
 import { STAGGER, TRANSITION, VIEWPORT } from "@/lib/config/motion";
 import { cn } from "@/lib/utils/cn";
 
-import { useReducedMotion } from "./use-reduced-motion";
-
 type RevealProps = React.ComponentProps<"div"> & {
   /** Seconds to wait before this element starts. */
   delay?: number;
@@ -28,15 +26,6 @@ export function Reveal({
   stagger = false,
   ...props
 }: RevealProps) {
-  const reduced = useReducedMotion();
-
-  if (reduced)
-    return (
-      <div className={className} {...props}>
-        {children}
-      </div>
-    );
-
   return (
     <motion.div
       data-reveal
@@ -61,19 +50,25 @@ export function Reveal({
   );
 }
 
-/** A child of a `stagger` Reveal. Inherits the parent's timing. */
-export function RevealItem({ className, children, ...props }: React.ComponentProps<"div">) {
-  const reduced = useReducedMotion();
-
-  if (reduced)
-    return (
-      <div className={className} {...props}>
-        {children}
-      </div>
-    );
+/**
+ * A child of a `stagger` Reveal. Inherits the parent's timing.
+ *
+ * `as` matters for more than tidiness: a div inside a <ul> is invalid markup
+ * and stops the list being announced as a list, so any RevealItem used inside
+ * one must pass `as="li"`.
+ */
+export function RevealItem({
+  className,
+  children,
+  as = "div",
+  ...props
+}: React.ComponentProps<"div"> & { as?: "div" | "li" }) {
+  /* Cast so the spread props type against one element. The two differ only in
+     their ref type, and nothing here passes a ref. */
+  const MotionTag = (as === "li" ? motion.li : motion.div) as typeof motion.div;
 
   return (
-    <motion.div
+    <MotionTag
       data-reveal
       className={cn(className)}
       variants={{
@@ -83,6 +78,6 @@ export function RevealItem({ className, children, ...props }: React.ComponentPro
       {...(props as React.ComponentProps<typeof motion.div>)}
     >
       {children}
-    </motion.div>
+    </MotionTag>
   );
 }

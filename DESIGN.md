@@ -67,7 +67,11 @@ Four patterns carry the site:
    `[clip-path:inset(0)]`, so content scrolls up over a stationary image.
 4. **Lenis smooth scroll** under everything.
 
-Every primitive checks `prefers-reduced-motion` itself, so pages never have to.
+Reduced motion is handled in CSS, not by branching components on it. The server
+cannot know the preference, so a component that renders different markup for it
+mismatches on hydration — `MotionConfig reducedMotion="user"` plus the
+`prefers-reduced-motion` block in `globals.css` neutralise the motion instead,
+and every component renders one tree.
 
 ### `ImageReveal` has three layers on purpose
 

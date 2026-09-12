@@ -25,9 +25,14 @@
   --color-navy-800: #2a2a82;
   --color-navy-700: #3d3d9c;
 
-  /* Accent — the logo lime. CTAs, active states, rules, hovers. Used sparingly. */
+  /* Accent — the logo lime. CTAs, active states, rules, hovers. Used sparingly.
+     A fill colour and a text colour are different jobs: the logo lime is bright
+     enough to carry navy text on top of it, but nowhere near legible AS text on
+     a light ground. `lime-text` is the only one of these that may colour type
+     on canvas or surface — it clears 4.5:1 on all three light grounds. */
   --color-lime: #8dc63f;
-  --color-lime-dark: #74a830;
+  --color-lime-dark: #7ab32f;
+  --color-lime-text: #557324;
   --color-lime-light: #b4dc7c;
   --color-lime-wash: #f2f8e8;
 
@@ -38,7 +43,7 @@
   /* Text */
   --color-foreground: #14152e;
   --color-muted: #6e6b66;
-  --color-muted-light: #a29e97;
+  --color-muted-light: #6e6960;
 
   /* Feedback */
   --color-success: #15803d;
@@ -104,8 +109,11 @@
     outline-offset: 3px;
   }
 
-  /* The floor, not the ceiling: primitives also check the media query in JS so
-     they can skip layout animation entirely rather than just run it fast. */
+  /* Reduced motion is handled here rather than by branching components on the
+     preference: the server cannot know it, so markup that differs by it is a
+     hydration mismatch. Motion still renders the same tree; these rules make it
+     arrive finished. `!important` is required — it has to beat Motion's own
+     inline styles. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -114,6 +122,17 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
+    }
+
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      clip-path: none !important;
+    }
+
+    /* The route curtain has nothing to say without its wipe. */
+    [data-curtain] {
+      display: none !important;
     }
   }
 }

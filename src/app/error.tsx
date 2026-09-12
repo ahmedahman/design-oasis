@@ -7,7 +7,7 @@ export default function Error({ reset }: { error: Error; reset: () => void }) {
   return (
     <main className="bg-canvas flex min-h-svh items-center">
       <Container>
-        <p className="text-lime-dark text-[10px] tracking-[0.2em] uppercase">Something broke</p>
+        <p className="text-lime-text text-[10px] tracking-[0.2em] uppercase">Something broke</p>
         <h1 className="font-display mt-5 max-w-2xl text-5xl leading-[1.05] tracking-tight text-balance md:text-7xl">
           That did not load.
         </h1>

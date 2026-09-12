@@ -38,12 +38,15 @@ export function BrandLogo({
     <Link
       href={href}
       className={cn("inline-flex items-center gap-2.5", className)}
-      aria-label={`${SITE.name} — home`}
+      /* Only name the link explicitly when there is no visible wordmark to do
+         it. An aria-label over visible text makes the accessible name disagree
+         with what a speech-control user actually reads. */
+      aria-label={showWordmark ? undefined : `${SITE.name} — home`}
     >
       <BrandMark />
       {showWordmark && (
         <span className="leading-none">
-          <span className="block text-sm font-bold tracking-[0.14em] uppercase">Design</span>
+          <span className="block text-sm font-bold tracking-[0.14em] uppercase">Design</span>{" "}
           <span className="text-lime block text-sm tracking-[0.14em] uppercase">Oasis</span>
         </span>
       )}

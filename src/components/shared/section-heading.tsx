@@ -21,7 +21,7 @@ export function SectionHeading({
   return (
     <Reveal className={cn(align === "center" && "mx-auto max-w-3xl text-center", className)}>
       {eyebrow && (
-        <p className="text-lime-dark mb-5 text-[10px] tracking-[0.2em] uppercase">{eyebrow}</p>
+        <p className="text-lime-text mb-5 text-[10px] tracking-[0.2em] uppercase">{eyebrow}</p>
       )}
       <Heading className="font-display max-w-3xl text-4xl leading-[1.08] tracking-tight text-balance md:text-6xl">
         {title}

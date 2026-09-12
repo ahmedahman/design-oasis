@@ -39,7 +39,7 @@ export default function ContactPage() {
                 <dd className="mt-2">
                   <a
                     href={`mailto:${SITE.email}`}
-                    className="hover:text-lime-dark transition-colors"
+                    className="hover:text-lime-text transition-colors"
                   >
                     {SITE.email}
                   </a>
@@ -50,7 +50,7 @@ export default function ContactPage() {
                 <dd className="mt-2 flex flex-col gap-1">
                   <a
                     href={`tel:+${SITE.phoneE164}`}
-                    className="hover:text-lime-dark transition-colors"
+                    className="hover:text-lime-text transition-colors"
                   >
                     {SITE.phoneDisplay}
                   </a>
@@ -58,7 +58,7 @@ export default function ContactPage() {
                     href={`https://wa.me/${SITE.whatsapp}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-muted hover:text-lime-dark text-sm transition-colors"
+                    className="text-muted hover:text-lime-text text-sm transition-colors"
                   >
                     Message on WhatsApp
                   </a>

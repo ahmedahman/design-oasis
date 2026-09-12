@@ -62,9 +62,10 @@ export default async function HomePage() {
                 <p className="text-muted mt-4">{service.summary}</p>
                 <Link
                   href={`${ROUTES.services}#${service.id}`}
-                  className="text-lime-dark hover:text-navy-950 mt-7 inline-block text-xs tracking-[0.12em] uppercase transition-colors"
+                  className="text-lime-text hover:text-navy-950 mt-7 inline-block text-xs tracking-[0.12em] uppercase transition-colors"
                 >
                   Read more
+                  <span className="sr-only"> about {service.title}</span>
                 </Link>
               </RevealItem>
             ))}

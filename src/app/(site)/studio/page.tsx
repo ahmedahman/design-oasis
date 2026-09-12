@@ -39,7 +39,7 @@ export default function StudioPage() {
             <p className="text-lime mb-6 text-[10px] tracking-[0.2em] uppercase">Mission</p>
             <ul>
               {MISSION.map((item) => (
-                <RevealItem key={item} className="border-light/15 border-t py-5">
+                <RevealItem key={item} as="li" className="border-light/15 border-t py-5">
                   <span className="text-light/80">{item}</span>
                 </RevealItem>
               ))}
@@ -66,7 +66,7 @@ export default function StudioPage() {
           {TEAM.map((member) => (
             <RevealItem key={member.name} className="border-border border-t pt-6">
               <h3 className="font-display text-2xl leading-tight tracking-tight">{member.name}</h3>
-              <p className="text-lime-dark mt-2 text-[10px] tracking-[0.16em] uppercase">
+              <p className="text-lime-text mt-2 text-[10px] tracking-[0.16em] uppercase">
                 {member.role}
               </p>
               {"bio" in member && member.bio && (

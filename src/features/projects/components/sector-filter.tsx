@@ -22,7 +22,7 @@ export function SectorFilter({
         onClick={() => onChange(null)}
         aria-pressed={sector === null}
         className={cn(
-          "text-[10px] tracking-[0.16em] uppercase transition-colors",
+          "py-2 text-[10px] tracking-[0.16em] uppercase transition-colors",
           sector === null ? "text-foreground" : "text-muted-light hover:text-foreground",
         )}
       >
@@ -37,7 +37,7 @@ export function SectorFilter({
             onClick={() => onChange(active ? null : option.slug)}
             aria-pressed={active}
             className={cn(
-              "text-[10px] tracking-[0.16em] uppercase transition-colors",
+              "py-2 text-[10px] tracking-[0.16em] uppercase transition-colors",
               active ? "text-foreground" : "text-muted-light hover:text-foreground",
             )}
           >

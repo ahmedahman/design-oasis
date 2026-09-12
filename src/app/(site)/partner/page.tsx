@@ -70,7 +70,7 @@ export default function PartnerPage() {
           <Reveal stagger>
             <ul>
               {ADVANTAGES.map((advantage) => (
-                <RevealItem key={advantage} className="border-light/15 border-t py-5">
+                <RevealItem key={advantage} as="li" className="border-light/15 border-t py-5">
                   <span className="text-light/80">{advantage}</span>
                 </RevealItem>
               ))}

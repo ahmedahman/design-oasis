@@ -1,12 +1,9 @@
 "use client";
 
 import { motion } from "motion/react";
-import { createElement } from "react";
 
 import { STAGGER, TRANSITION, VIEWPORT } from "@/lib/config/motion";
 import { cn } from "@/lib/utils/cn";
-
-import { useReducedMotion } from "./use-reduced-motion";
 
 type RevealTextProps = {
   /**
@@ -35,21 +32,7 @@ export function RevealText({
   lineClassName,
   delay = 0,
 }: RevealTextProps) {
-  const reduced = useReducedMotion();
   const label = lines.join(" ");
-
-  if (reduced) {
-    return createElement(
-      as,
-      { className: cn(className) },
-      lines.map((line) => (
-        <span key={line} className={cn("block", lineClassName)}>
-          {line}
-        </span>
-      )),
-    );
-  }
-
   const Tag = motion[as];
 
   return (

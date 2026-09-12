@@ -24,15 +24,10 @@ export function Magnetic({
   const x = useSpring(useMotionValue(0), SPRING.soft);
   const y = useSpring(useMotionValue(0), SPRING.soft);
 
-  if (reduced) {
-    return (
-      <div className={className} {...props}>
-        {children}
-      </div>
-    );
-  }
-
+  /* The markup is identical either way — only the handler changes — so there
+     is nothing for hydration to disagree about. */
   function onMove(event: React.PointerEvent<HTMLDivElement>) {
+    if (reduced) return;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     x.set((event.clientX - (rect.left + rect.width / 2)) * strength);

@@ -5,7 +5,6 @@ import { animate, motion, useMotionValue } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-import { useReducedMotion } from "@/components/motion";
 import { Button } from "@/components/ui/button";
 import { SPRING, TRANSITION } from "@/lib/config/motion";
 import { cn } from "@/lib/utils/cn";
@@ -18,17 +17,17 @@ const STEP = 0.35;
 /**
  * A pan-and-zoom floor plan with hotspots.
  *
- * Hotspots are stored in normalized 0–1 coordinates, so they survive any plan
- * image size or re-export. Drag constraints are recomputed from the current
- * scale rather than measured, which keeps the plan from being dragged off
- * screen at any zoom level.
+ * Hotspots are stored in normalized 0–1 coordinates so they survive any plan
+ * image size or re-export.
  *
- * The whole thing degrades: under reduced motion, or for anyone navigating by
- * keyboard, the plan renders static with the hotspots as an ordinary list
- * beneath it. The interaction is an enhancement, never the only way in.
+ * Nothing here branches on `prefers-reduced-motion`: the server cannot know the
+ * preference, so markup that differs by it is a hydration mismatch. Motion is
+ * neutralised by `MotionConfig reducedMotion="user"` and the media query in
+ * globals.css, and the room list below the plan is always rendered — it is the
+ * accessible spine of the feature, not a consolation prize, and is how the
+ * content reads for anyone who never touches the drawing.
  */
 export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
-  const reduced = useReducedMotion();
   const viewportRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(MIN_SCALE);
   const [active, setActive] = useState<FloorPlanHotspot | null>(null);
@@ -55,20 +54,20 @@ export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
   const boundY = Math.max(0, (frame.height * (scale - 1)) / 2);
   const clamp = (value: number, limit: number) => Math.min(limit, Math.max(-limit, value));
 
-  function zoom(direction: 1 | -1) {
-    setScale((current) => {
-      const next = Math.min(MAX_SCALE, Math.max(MIN_SCALE, current + direction * STEP));
-      if (next === MIN_SCALE) recentre();
-      return next;
-    });
-  }
-
   /* `animate` rather than `.set()`: after a drag, Motion still owns these
      values, and a bare set is liable to be overwritten by the gesture's own
      settle. Animating takes control back and cancels whatever was in flight. */
   function recentre() {
     animate(x, 0, TRANSITION.standard);
     animate(y, 0, TRANSITION.standard);
+  }
+
+  function zoom(direction: 1 | -1) {
+    setScale((current) => {
+      const next = Math.min(MAX_SCALE, Math.max(MIN_SCALE, current + direction * STEP));
+      if (next === MIN_SCALE) recentre();
+      return next;
+    });
   }
 
   function reset() {
@@ -101,44 +100,40 @@ export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
     <div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
         <p className="text-muted text-sm">
-          {reduced
-            ? "Hotspots are listed below the plan."
-            : "Drag to move around the plan. Select a marker for detail."}
+          Zoom in and drag to move around the plan. Every room is listed below it.
         </p>
-        {!reduced && (
-          <div className="flex items-center gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              onClick={() => zoom(-1)}
-              disabled={scale <= MIN_SCALE}
-              aria-label="Zoom out"
-            >
-              <Minus />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              onClick={() => zoom(1)}
-              disabled={scale >= MAX_SCALE}
-              aria-label="Zoom in"
-            >
-              <Plus />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              onClick={reset}
-              disabled={!zoomed}
-              aria-label="Reset plan"
-            >
-              <RotateCcw />
-            </Button>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => zoom(-1)}
+            disabled={scale <= MIN_SCALE}
+            aria-label="Zoom out"
+          >
+            <Minus />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => zoom(1)}
+            disabled={scale >= MAX_SCALE}
+            aria-label="Zoom in"
+          >
+            <Plus />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={reset}
+            disabled={!zoomed}
+            aria-label="Reset plan"
+          >
+            <RotateCcw />
+          </Button>
+        </div>
       </div>
 
       <div
@@ -147,14 +142,14 @@ export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
         style={{ aspectRatio: `${plan.width} / ${plan.height}` }}
         role="group"
         aria-label={`Floor plan: ${plan.alt}. Use arrow keys to pan, plus and minus to zoom, escape to reset.`}
-        tabIndex={reduced ? -1 : 0}
-        onKeyDown={reduced ? undefined : onKeyDown}
-        data-cursor-drag={!reduced && zoomed ? true : undefined}
-        data-cursor-label={!reduced && zoomed ? "Drag" : undefined}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        data-cursor-drag={zoomed ? true : undefined}
+        data-cursor-label={zoomed ? "Drag" : undefined}
       >
         <motion.div
           className={cn("absolute inset-0", zoomed && "cursor-grab active:cursor-grabbing")}
-          drag={!reduced && zoomed}
+          drag={zoomed}
           dragConstraints={{ left: -boundX, right: boundX, top: -boundY, bottom: boundY }}
           dragElastic={0.06}
           style={{ x, y }}
@@ -173,22 +168,21 @@ export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
             unoptimized
           />
 
-          {!reduced &&
-            plan.hotspots.map((hotspot) => (
-              <button
-                key={hotspot.id}
-                type="button"
-                onClick={() => setActive(hotspot)}
-                aria-label={`${hotspot.label} — show detail`}
-                className="group absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${hotspot.x * 100}%`, top: `${hotspot.y * 100}%` }}
-              >
-                <span className="bg-lime ring-lime/30 group-hover:ring-lime/60 block size-3 rounded-full ring-4 transition-all group-hover:scale-125" />
-                <span className="bg-navy-950 pointer-events-none absolute top-1/2 left-5 -translate-y-1/2 rounded-sm px-2.5 py-1 text-[10px] tracking-[0.14em] whitespace-nowrap text-white uppercase opacity-0 transition-opacity group-hover:opacity-100">
-                  {hotspot.label}
-                </span>
-              </button>
-            ))}
+          {plan.hotspots.map((hotspot) => (
+            <button
+              key={hotspot.id}
+              type="button"
+              onClick={() => setActive(hotspot)}
+              aria-label={`${hotspot.label} — show detail`}
+              className="group absolute -translate-x-1/2 -translate-y-1/2 p-3"
+              style={{ left: `${hotspot.x * 100}%`, top: `${hotspot.y * 100}%` }}
+            >
+              <span className="bg-lime ring-lime/30 group-hover:ring-lime/60 block size-3 rounded-full ring-4 transition-all group-hover:scale-125" />
+              <span className="bg-navy-950 pointer-events-none absolute top-1/2 left-8 -translate-y-1/2 rounded-sm px-2.5 py-1 text-[10px] tracking-[0.14em] whitespace-nowrap text-white uppercase opacity-0 transition-opacity group-hover:opacity-100">
+                {hotspot.label}
+              </span>
+            </button>
+          ))}
         </motion.div>
 
         {active && (
@@ -198,7 +192,7 @@ export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                className="text-muted hover:text-foreground text-[10px] tracking-[0.16em] uppercase"
+                className="text-muted hover:text-foreground px-2 py-1 text-[10px] tracking-[0.16em] uppercase"
               >
                 Close
               </button>
@@ -208,9 +202,7 @@ export function FloorPlanExplorer({ plan }: { plan: FloorPlan }) {
         )}
       </div>
 
-      {/* The accessible spine of the feature, not a consolation prize: every
-          hotspot is readable and linkable without touching the plan. */}
-      <dl className={cn("mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2", !reduced && "sr-only")}>
+      <dl className="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
         {plan.hotspots.map((hotspot) => (
           <div key={hotspot.id} className="border-border border-t pt-4">
             <dt className="font-display text-lg tracking-tight">{hotspot.label}</dt>

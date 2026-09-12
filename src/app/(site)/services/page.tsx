@@ -42,7 +42,7 @@ export default function ServicesPage() {
               </p>
               <ul className="mt-9">
                 {service.points.map((point) => (
-                  <RevealItem key={point} className="border-border border-t py-4">
+                  <RevealItem key={point} as="li" className="border-border border-t py-4">
                     <span className="text-muted">{point}</span>
                   </RevealItem>
                 ))}
@@ -66,7 +66,7 @@ export default function ServicesPage() {
           <Reveal stagger>
             <ul className="grid gap-x-10 sm:grid-cols-2">
               {SECTORS.map((sector) => (
-                <RevealItem key={sector.slug} className="border-light/15 border-t py-5">
+                <RevealItem key={sector.slug} as="li" className="border-light/15 border-t py-5">
                   <p className="font-display text-xl tracking-tight">{sector.label}</p>
                   <p className="text-light/60 mt-1 text-sm">{sector.blurb}</p>
                 </RevealItem>

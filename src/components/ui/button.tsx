@@ -21,7 +21,7 @@ const buttonVariants = cva(
         onDark: "bg-white text-navy-950 hover:bg-lime hover:text-navy-950",
         onDarkOutline: "border border-white/30 text-white hover:border-lime hover:text-lime",
         ghost: "text-foreground hover:bg-surface-muted",
-        link: "text-foreground underline underline-offset-4 hover:text-lime-dark",
+        link: "text-foreground underline underline-offset-4 hover:text-lime-text",
       },
       size: {
         sm: "h-9 px-4 text-xs tracking-wide uppercase",

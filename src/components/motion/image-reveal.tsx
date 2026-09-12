@@ -5,8 +5,6 @@ import { motion } from "motion/react";
 import { TRANSITION, VIEWPORT } from "@/lib/config/motion";
 import { cn } from "@/lib/utils/cn";
 
-import { useReducedMotion } from "./use-reduced-motion";
-
 /**
  * A clip-path wipe from the bottom while the image inside scales 1.08 → 1, so
  * the photograph *settles* rather than fading in.
@@ -26,16 +24,6 @@ export function ImageReveal({
   delay = 0,
   ...props
 }: React.ComponentProps<"div"> & { delay?: number }) {
-  const reduced = useReducedMotion();
-
-  if (reduced) {
-    return (
-      <div className={cn("overflow-hidden", className)} {...props}>
-        {children}
-      </div>
-    );
-  }
-
   const transition = { ...TRANSITION.reveal, delay };
 
   return (

@@ -147,7 +147,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {project.floorPlan && (
         <Section rules>
           <Reveal className="mb-10">
-            <p className="text-lime-dark mb-5 text-[10px] tracking-[0.2em] uppercase">The plan</p>
+            <p className="text-lime-text mb-5 text-[10px] tracking-[0.2em] uppercase">The plan</p>
             <h2 className="font-display max-w-2xl text-4xl leading-[1.08] tracking-tight text-balance md:text-5xl">
               Explore the layout.
             </h2>

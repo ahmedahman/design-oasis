@@ -60,14 +60,16 @@ export function SiteHeader() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative text-xs tracking-[0.12em] uppercase transition-colors",
+                  /* py-3 is what carries the link past the 24px minimum touch
+                     target; the type itself is only 12px tall. */
+                  "relative py-3 text-xs tracking-[0.12em] uppercase transition-colors",
                   light ? "text-white/80 hover:text-white" : "text-muted hover:text-foreground",
                   active && (light ? "text-white" : "text-foreground"),
                 )}
               >
                 {item.label}
                 {active && (
-                  <span aria-hidden className="bg-lime absolute -bottom-1.5 left-0 h-px w-full" />
+                  <span aria-hidden className="bg-lime absolute bottom-1.5 left-0 h-px w-full" />
                 )}
               </Link>
             );
