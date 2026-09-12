@@ -63,6 +63,8 @@
   /* Site chrome */
   --spacing-gutter: 1.25rem;
   --spacing-header: 5rem;
+  /* Header height plus breathing room, for the first section on inner pages. */
+  --spacing-header-offset: 9rem;
 }
 
 /* Semantic aliases, so components name intent rather than a shade. Changing
@@ -143,7 +145,12 @@
       rgb(11 12 46 / 0.08) 70%,
       transparent 100%
     ),
-    linear-gradient(to bottom, rgb(11 12 46 / 0.35) 0%, rgb(11 12 46 / 0.1) 45%, rgb(11 12 46 / 0.6) 100%);
+    linear-gradient(
+      to bottom,
+      rgb(11 12 46 / 0.35) 0%,
+      rgb(11 12 46 / 0.1) 45%,
+      rgb(11 12 46 / 0.6) 100%
+    );
 }
 
 /* Seats a caption over a project image. */

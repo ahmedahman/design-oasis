@@ -80,7 +80,7 @@ design studio worth hiring, and convert landowners into Joint Venture conversati
 
 ## Not the ITPC portal
 
-This repo follows the *architecture* rules of the ITPC portal frontend. It shares **none
+This repo follows the _architecture_ rules of the ITPC portal frontend. It shares **none
 of its visual design** — no dark-green government palette, no notched `FieldShell` inputs,
 no sidebar app shell. Design Oasis is warm luxe editorial; see `DESIGN.md`.
 

@@ -14,7 +14,7 @@ export function ColumnRules({ className }: { className?: string }) {
       aria-hidden
       preserveAspectRatio="none"
       className={cn(
-        "text-lime/25 pointer-events-none absolute inset-y-0 left-gutter h-full w-[calc(100%-2*var(--spacing-gutter))] overflow-visible",
+        "text-lime/25 left-gutter pointer-events-none absolute inset-y-0 h-full w-[calc(100%-2*var(--spacing-gutter))] overflow-visible",
         className,
       )}
     >

@@ -3,6 +3,7 @@ import { Fraunces, Geist } from "next/font/google";
 import { Toaster } from "sonner";
 
 import { Cursor, SmoothScroll } from "@/components/motion";
+import { OrganizationSchema } from "@/components/shared/organization-schema";
 import { SITE } from "@/lib/config/site";
 
 import "./globals.css";
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </noscript>
       </head>
       <body className="font-sans antialiased">
+        <OrganizationSchema />
         <SmoothScroll />
         <Cursor />
         {children}

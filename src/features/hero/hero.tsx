@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { useReducedMotion } from "@/components/motion";
 import { TRANSITION } from "@/lib/config/motion";
 
+import { cn } from "@/lib/utils/cn";
+
 import { useWebGLSupport } from "./use-webgl-support";
 
 /* three.js lands in its own chunk, fetched only once the poster is on screen
@@ -54,18 +56,14 @@ export function Hero({ panorama, poster, posterAlt }: HeroProps) {
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden"
+      className={cn(
+        "absolute inset-0 overflow-hidden",
+        interactive && "cursor-grab touch-none [body[data-dragging]_&]:cursor-grabbing",
+      )}
       data-cursor-theme="dark"
       {...(interactive ? { "data-cursor-drag": true, "data-cursor-label": "Click & drag" } : {})}
     >
-      <Image
-        src={poster}
-        alt={posterAlt}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+      <Image src={poster} alt={posterAlt} fill priority sizes="100vw" className="object-cover" />
 
       {mountScene && (
         <AnimatePresence>

@@ -16,9 +16,7 @@ export function SiteFooter() {
             <p className="font-display mt-7 max-w-sm text-3xl leading-[1.15] tracking-tight text-balance">
               Turning land into assets that hold their value.
             </p>
-            <address className="text-light/60 mt-8 text-sm not-italic">
-              {SITE.addressLine}
-            </address>
+            <address className="text-light/60 mt-8 text-sm not-italic">{SITE.addressLine}</address>
             <div className="mt-4 flex flex-col gap-1 text-sm">
               <a href={`mailto:${SITE.email}`} className="hover:text-lime w-fit transition-colors">
                 {SITE.email}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1400" width="2000" height="1400">
+  <rect width="2000" height="1400" fill="#FFFFFF"/>
+  <g opacity="0.5"><line x1="0" y1="0" x2="0" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="100" y1="0" x2="100" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="200" y1="0" x2="200" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="300" y1="0" x2="300" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="400" y1="0" x2="400" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="500" y1="0" x2="500" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="600" y1="0" x2="600" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="700" y1="0" x2="700" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="800" y1="0" x2="800" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="900" y1="0" x2="900" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1000" y1="0" x2="1000" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1100" y1="0" x2="1100" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1200" y1="0" x2="1200" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1300" y1="0" x2="1300" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1400" y1="0" x2="1400" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1500" y1="0" x2="1500" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1600" y1="0" x2="1600" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1700" y1="0" x2="1700" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1800" y1="0" x2="1800" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="1900" y1="0" x2="1900" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="2000" y1="0" x2="2000" y2="1400" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="0" x2="2000" y2="0" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="100" x2="2000" y2="100" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="200" x2="2000" y2="200" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="300" x2="2000" y2="300" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="400" x2="2000" y2="400" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="500" x2="2000" y2="500" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="600" x2="2000" y2="600" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="700" x2="2000" y2="700" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="800" x2="2000" y2="800" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="900" x2="2000" y2="900" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="1000" x2="2000" y2="1000" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="1100" x2="2000" y2="1100" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="1200" x2="2000" y2="1200" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="1300" x2="2000" y2="1300" stroke="#C9C3B8" stroke-width="1"/><line x1="0" y1="1400" x2="2000" y2="1400" stroke="#C9C3B8" stroke-width="1"/></g>
+  <rect x="420" y="460" width="480" height="340" fill="#F1EEE8" stroke="#14152E" stroke-width="7"/>
+  <text x="660" y="630" fill="#14152E" font-family="Helvetica,Arial,sans-serif"
+        font-size="30" letter-spacing="4" text-anchor="middle" dominant-baseline="middle"
+        opacity="0.75">LIVING</text>
+  <rect x="1000" y="340" width="400" height="300" fill="#F1EEE8" stroke="#14152E" stroke-width="7"/>
+  <text x="1200" y="490" fill="#14152E" font-family="Helvetica,Arial,sans-serif"
+        font-size="30" letter-spacing="4" text-anchor="middle" dominant-baseline="middle"
+        opacity="0.75">KITCHEN</text>
+  <rect x="1240" y="780" width="460" height="320" fill="#F1EEE8" stroke="#14152E" stroke-width="7"/>
+  <text x="1470" y="940" fill="#14152E" font-family="Helvetica,Arial,sans-serif"
+        font-size="30" letter-spacing="4" text-anchor="middle" dominant-baseline="middle"
+        opacity="0.75">PRINCIPAL SUITE</text>
+  <rect x="140" y="940" width="340" height="260" fill="#F1EEE8" stroke="#14152E" stroke-width="7"/>
+  <text x="310" y="1070" fill="#14152E" font-family="Helvetica,Arial,sans-serif"
+        font-size="30" letter-spacing="4" text-anchor="middle" dominant-baseline="middle"
+        opacity="0.75">BOYS' QUARTERS</text>
+  <rect x="3.5" y="3.5" width="1993" height="1393" fill="none" stroke="#14152E" stroke-width="7"/>
+  <text x="40" y="1360" fill="#14152E" font-family="Helvetica,Arial,sans-serif" font-size="26" letter-spacing="6" opacity="0.55">KATAMPE VILLA — GROUND FLOOR</text>
+</svg>

@@ -28,7 +28,13 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [pathname]);
+  // Close the mobile menu on navigation. Adjusting state during render is the
+  // recommended pattern here — an effect would cause a cascading render.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
   const light = overDark && !scrolled;
 
@@ -40,7 +46,7 @@ export function SiteHeader() {
       )}
       data-cursor-theme={light ? "dark" : undefined}
     >
-      <div className="px-gutter mx-auto flex h-header w-full max-w-[1600px] items-center justify-between gap-6">
+      <div className="px-gutter h-header mx-auto flex w-full max-w-[1600px] items-center justify-between gap-6">
         <Magnetic strength={0.2}>
           <BrandLogo className={cn(light ? "text-white" : "text-foreground")} />
         </Magnetic>
@@ -102,10 +108,7 @@ export function SiteHeader() {
         <ul className="flex flex-col gap-5">
           {[...MAIN_NAV, { label: "Contact", href: ROUTES.contact }].map((item) => (
             <li key={item.href}>
-              <Link
-                href={item.href}
-                className="font-display text-2xl tracking-tight"
-              >
+              <Link href={item.href} className="font-display text-2xl tracking-tight">
                 {item.label}
               </Link>
             </li>

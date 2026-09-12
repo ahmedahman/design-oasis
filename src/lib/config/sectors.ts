@@ -10,6 +10,7 @@ export const SECTORS = [
 
 export type SectorSlug = (typeof SECTORS)[number]["slug"];
 
-export const SECTOR_LABELS = Object.fromEntries(
-  SECTORS.map((s) => [s.slug, s.label]),
-) as Record<SectorSlug, string>;
+export const SECTOR_LABELS = Object.fromEntries(SECTORS.map((s) => [s.slug, s.label])) as Record<
+  SectorSlug,
+  string
+>;

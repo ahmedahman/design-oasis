@@ -1,7 +1,7 @@
 "use client";
 
-import { useFrame, useLoader, useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 type PanoramaProps = {
@@ -14,12 +14,14 @@ type PanoramaProps = {
  * An equirectangular image on a sphere turned inside out, with the camera at
  * its centre. Dragging looks around; releasing hands back to a slow drift.
  *
- * Asset cost is one JPG, which is why this variant ships first — a real Design
- * Oasis interior drops straight in with no code change.
+ * The texture is loaded imperatively rather than through `useLoader` so its
+ * colour space can be set on a local before it ever reaches React, and so it
+ * can be disposed on unmount. Pointer-down comes from R3F's own event system
+ * and move/up from the window, which keeps the renderer untouched.
  */
 export function Panorama({ src, drift }: PanoramaProps) {
-  const texture = useLoader(THREE.TextureLoader, src);
-  const { camera, gl } = useThree();
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  const { camera, invalidate } = useThree();
 
   const lon = useRef(0);
   const lat = useRef(0);
@@ -27,19 +29,27 @@ export function Panorama({ src, drift }: PanoramaProps) {
   const last = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-  }, [texture]);
+    let disposed = false;
+    let loaded: THREE.Texture | null = null;
+
+    new THREE.TextureLoader().load(src, (tex) => {
+      if (disposed) {
+        tex.dispose();
+        return;
+      }
+      tex.colorSpace = THREE.SRGBColorSpace;
+      loaded = tex;
+      setTexture(tex);
+      invalidate();
+    });
+
+    return () => {
+      disposed = true;
+      loaded?.dispose();
+    };
+  }, [src, invalidate]);
 
   useEffect(() => {
-    const el = gl.domElement;
-
-    function down(event: PointerEvent) {
-      dragging.current = true;
-      last.current = { x: event.clientX, y: event.clientY };
-      el.setPointerCapture(event.pointerId);
-      el.style.cursor = "grabbing";
-    }
-
     function move(event: PointerEvent) {
       if (!dragging.current) return;
       lon.current -= (event.clientX - last.current.x) * 0.12;
@@ -49,27 +59,26 @@ export function Panorama({ src, drift }: PanoramaProps) {
       last.current = { x: event.clientX, y: event.clientY };
     }
 
-    function up(event: PointerEvent) {
+    function up() {
       dragging.current = false;
-      if (el.hasPointerCapture(event.pointerId)) el.releasePointerCapture(event.pointerId);
-      el.style.cursor = "grab";
+      document.body.removeAttribute("data-dragging");
     }
 
-    el.style.cursor = "grab";
-    // touch-action is what stops the browser stealing the drag to scroll.
-    el.style.touchAction = "none";
-    el.addEventListener("pointerdown", down);
-    el.addEventListener("pointermove", move);
-    el.addEventListener("pointerup", up);
-    el.addEventListener("pointercancel", up);
-
+    window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
     return () => {
-      el.removeEventListener("pointerdown", down);
-      el.removeEventListener("pointermove", move);
-      el.removeEventListener("pointerup", up);
-      el.removeEventListener("pointercancel", up);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
     };
-  }, [gl]);
+  }, []);
+
+  function onPointerDown(event: ThreeEvent<PointerEvent>) {
+    dragging.current = true;
+    last.current = { x: event.clientX, y: event.clientY };
+    document.body.setAttribute("data-dragging", "");
+  }
 
   useFrame((_, delta) => {
     if (drift && !dragging.current) lon.current += delta * 1.2;
@@ -84,8 +93,10 @@ export function Panorama({ src, drift }: PanoramaProps) {
     );
   });
 
+  if (!texture) return null;
+
   return (
-    <mesh scale={[-1, 1, 1]}>
+    <mesh scale={[-1, 1, 1]} onPointerDown={onPointerDown}>
       <sphereGeometry args={[500, 60, 40]} />
       <meshBasicMaterial map={texture} side={THREE.BackSide} toneMapped={false} />
     </mesh>

@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Design Oasis
 
-## Getting Started
+Marketing site for **Design Oasis Limited** — a real estate development and
+architectural firm in Maitama, Abuja.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Script              | Does                           |
+| ------------------- | ------------------------------ |
+| `npm run dev`       | Dev server                     |
+| `npm run build`     | Production build — must pass   |
+| `npm run lint`      | ESLint — must be clean         |
+| `npm run typecheck` | `tsc --noEmit` — must be clean |
+| `npm run format`    | Prettier                       |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env.local`. Everything runs without any of it set.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Routes
 
-## Learn More
+| Route              | What it is                                                  |
+| ------------------ | ----------------------------------------------------------- |
+| `/`                | Draggable WebGL hero, positioning, featured work, JV teaser |
+| `/projects`        | Slider ↔ grid ↔ list morph, filterable by sector            |
+| `/projects/[slug]` | Gallery, facts, drag-to-explore floor plan, next project    |
+| `/services`        | Design & Build · Development · Architecture                 |
+| `/partner`         | The landowner track: JV structure, returns, land submission |
+| `/studio`          | Vision, mission, values, team, corporate detail             |
+| `/contact`         | Enquiry form and contact points                             |
+| `/api/enquiries`   | Both forms POST here                                        |
 
-To learn more about Next.js, take a look at the following resources:
+## How it is built
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind v4 ·
+Motion + Lenis · three.js (hero only) · React Hook Form + Zod.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Read **`AGENTS.md`** before changing anything — it carries the rules this repo is
+held to. **`DESIGN.md`** covers the visual and motion system.
 
-## Deploy on Vercel
+The short version:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Never rebuild a primitive that exists in `components/ui/`.
+- All animation goes through `components/motion/`; timings come from `lib/config/motion.ts`.
+- No hardcoded hex or px in a component — tokens live in `globals.css`.
+- Only `lib/data/` may touch `lib/fixtures/`; only `features/hero/` may touch three.js.
+  Both are enforced by ESLint.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Content
+
+Push 1 runs on fixtures — there is no CMS. Project content is real, taken from the
+company profile; photography, the hero panorama and the floor plans are placeholders.
+`DESIGN.md` §7 lists every one and where it lives.

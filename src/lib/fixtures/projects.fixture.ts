@@ -55,8 +55,8 @@ export const PROJECTS_FIXTURE: Project[] = [
       },
     ],
     floorPlan: {
-      src: unsplash("1503387762-abdf1167b7bf", 2400),
-      alt: "Masterplan drawing of the resort showing the hotel, course and wellness campus",
+      src: "/plans/kano-golf-resort.svg",
+      alt: "Masterplan drawing of the resort showing the hotel, clubhouse, wellness and events campus",
       width: 2400,
       height: 1600,
       hotspots: [
@@ -179,7 +179,7 @@ export const PROJECTS_FIXTURE: Project[] = [
       },
     ],
     floorPlan: {
-      src: unsplash("1503387762-abdf1167b7bf", 2000),
+      src: "/plans/katampe-villas.svg",
       alt: "Ground floor plan of the villa type",
       width: 2000,
       height: 1400,

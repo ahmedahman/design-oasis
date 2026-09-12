@@ -30,7 +30,12 @@ export function Reveal({
 }: RevealProps) {
   const reduced = useReducedMotion();
 
-  if (reduced) return <div className={className} {...props}>{children}</div>;
+  if (reduced)
+    return (
+      <div className={className} {...props}>
+        {children}
+      </div>
+    );
 
   return (
     <motion.div
@@ -60,7 +65,12 @@ export function Reveal({
 export function RevealItem({ className, children, ...props }: React.ComponentProps<"div">) {
   const reduced = useReducedMotion();
 
-  if (reduced) return <div className={className} {...props}>{children}</div>;
+  if (reduced)
+    return (
+      <div className={className} {...props}>
+        {children}
+      </div>
+    );
 
   return (
     <motion.div
