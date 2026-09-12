@@ -26,7 +26,7 @@ export default function OpenGraphImage() {
         justifyContent: "space-between",
         background: "#0B0C2E",
         padding: 72,
-        fontFamily: "Georgia, serif",
+        fontFamily: "Helvetica, Arial, sans-serif",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
